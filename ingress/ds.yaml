@@ -1,0 +1,63 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: nginx-ingress-controller
+  labels:
+    k8s-app: nginx-ingress-lb
+spec:
+  selector:
+    matchLabels:
+      k8s-app: nginx-ingress-lb
+  template:
+    metadata:
+      labels:
+        k8s-app: nginx-ingress-lb
+        name: nginx-ingress-lb
+    spec:
+      hostNetwork: true
+      nodeSelector:
+        test-ingress: "true" # temporary, rename back to ingress when I roll over
+      terminationGracePeriodSeconds: 60
+      containers:
+      - image: euank/nginx-ingress-controller:8fe1efe
+        name: nginx-ingress-lb
+        imagePullPolicy: Always
+        ## TODO these are broken on my dep because of being hostnetworking
+        ## readinessProbe:
+        ##   httpGet:
+        ##     path: /healthz
+        ##     port: 10254
+        ##     scheme: HTTP
+        ## livenessProbe:
+        ##   httpGet:
+        ##     path: /healthz
+        ##     port: 10254
+        ##     scheme: HTTP
+        ##   initialDelaySeconds: 10
+        ##   timeoutSeconds: 1
+        # use downward API
+        env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        ports:
+        - containerPort: 80
+          hostPort: 80
+        - containerPort: 443
+          hostPort: 443
+        args:
+        - /nginx-ingress-controller
+        - --default-backend-service=$(POD_NAMESPACE)/default-http-backend
+        - --configmap=default/nginx-load-balancer-conf
+        volumeMounts:
+        - mountPath: /etc/nginx-ssl/dhparam
+          name: ingress-dhparam
+      volumes:
+      - name: ingress-dhparam
+        secret:
+          secretName: ingress-dhparam
