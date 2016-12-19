@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "euircbot"
+  labels:
+    name: "euircbot"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: euircbot
+    spec:
+      containers:
+      - name: euircbot
+        image: "quay.io/euank/euircbot@sha256:7bb1edf7bf1ac7918353e9822362e7e3ca32c1548b45d5322eb644fab64b749a"
+        resources:
+          requests:
+            memory: 200Mi
+          limits:
+            # TODO, lower this number once memory leaks are plugged
+            memory: 350Mi
+        volumeMounts:
+        - name: module-config
+          mountPath: "/usr/src/app/conf/"
+        - name: data
+          mountPath: "/usr/src/app/data/"
+        - name: config
+          mountPath: "/usr/src/app/config.json"
+          subPath: config.json # *sigh* TODO make this not need subpath
+      volumes:
+        - name: module-config
+          configMap:
+            name: "euircbot-modules"
+        - name: config
+          configMap:
+            name: "euircbot"
+        - name: data
+        {{- if .Values.euircbot.persistentVolume.enabled }}
+          persistentVolumeClaim:
+            claimName: "euircbot"
+        {{- else }}
+          emptyDir: {}
+        {{- end -}}

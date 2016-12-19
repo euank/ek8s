@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: "euircbot"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: "{{ .Release.Service }}"
+    release: "{{ .Release.Name }}"
+  name: "euircbot"
+data:
+  config.json: |-
+    {
+      "nick": {{ .Values.euircbot.config.nick | quote }},
+      "userName": "seubot",
+      "realName": "seubot",
+      "server": {{ .Values.euircbot.config.server | quote }},
+      "owner": {{ .Values.euircbot.config.owner | quote }},
+      "commandPrefix": "!",
+      "ssl": {{ .Values.euircbot.config.ssl }},
+      "port": {{ .Values.euircbot.config.port | quote }},
+      "mainChannel": {{ .Values.euircbot.config.mainChannel | quote }},
+      "channels": [],
+      "autoRejoin": true,
+      "showErrors": true,
+      "channelPrefixes": "&#",
+      "messageSplit": 512,
+      "moduleFolders": ["modules"],
+      "datafolder": "data",
+      "tmpfolder": "tmp",
+      "configfolder": "conf"
+    }

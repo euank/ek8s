@@ -1,0 +1,15 @@
+{{- if .Values.euircbot.persistentVolume.enabled -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: euircbot
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.euircbot.persistentVolume.size | quote }}
+  selector:
+    matchLabels:
+      {{ toYaml .Values.euircbot.persistentVolume.labels -}}
+{{- end -}}

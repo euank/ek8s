@@ -1,0 +1,11 @@
+name: EuIrcBot
+description: EuIrcBot
+version: 0.1.0
+home: https://github.com/euank/EuIrcBot
+sources:
+  - https://github.com/euank/EuIrcBot
+maintainers:
+  - name: Euan Kemp
+keywords:
+  - irc
+  - irc-bot
