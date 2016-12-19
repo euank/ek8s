@@ -19,3 +19,4 @@ be reused elsewhere.
 
 * Finish moving things over from the old repo
 * Somewhat better secrets management would be nice
+* Add linting (helm lint, yaml validation) for everything!
