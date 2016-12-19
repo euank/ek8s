@@ -9,8 +9,13 @@ a good job separating secrets out the first time and this isn't exactly a
 priority. 
 
 
+## Helm
+
+This repository depends on the helm tool. It is primarily used in order to
+correctly abstract out me-specific variables and at least pretend these could
+be reused elsewhere.
+
 ## TODO
 
-* The biggest todo is to pick something like helm that makes management of this a bit more sane
-* Also secrets
-* Also templeting
+* Finish moving things over from the old repo
+* Somewhat better secrets management would be nice
