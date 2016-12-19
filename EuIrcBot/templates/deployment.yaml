@@ -16,10 +16,10 @@ spec:
         image: "quay.io/euank/euircbot@sha256:7bb1edf7bf1ac7918353e9822362e7e3ca32c1548b45d5322eb644fab64b749a"
         resources:
           requests:
-            memory: 200Mi
+            memory: 300Mi
           limits:
             # TODO, lower this number once memory leaks are plugged
-            memory: 350Mi
+            memory: 500Mi
         volumeMounts:
         - name: module-config
           mountPath: "/usr/src/app/conf/"
