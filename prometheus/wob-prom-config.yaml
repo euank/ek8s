@@ -26,3 +26,18 @@ data:
           target_label: instance
         - target_label: __address__
           replacement: mgmt.sea1.wobscale.website:9116
+    - job_name: snmp2
+      scrape_interval: 10s
+      static_configs:
+        - targets:
+          - 10.255.255.12
+      metrics_path: /snmp
+      params:
+        module: [airfiber5x]
+      relabel_configs:
+        - source_labels: [__address__]
+          target_label: __param_target
+        - source_labels: [__param_target]
+          target_label: instance
+        - target_label: __address__
+          replacement: mgmt.sea1.wobscale.website:9116
