@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  labels:
+    app: synapse-nginx
+    name: synapse-nginx
+  name: synapse-nginx
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: synapse-nginx
+      name: synapse-nginx
+  template:
+    metadata:
+      annotations:
+        app: synapse-nginx
+      labels:
+        app: synapse-nginx
+        name: synapse-nginx
+    spec:
+      hostNetwork: true
+      nodeSelector:
+        ingress: "true"
+      containers:
+      - name: nginx
+        command: ["nginx", "-c", "/etc/nginx/conf/nginx.conf", "-g", "daemon off;"]
+        image: nginx:1.11.5
+        volumeMounts:
+        - name: certs
+          mountPath: /certs/
+        - name: dh
+          mountPath: /dh/
+        - name: conf
+          mountPath: /etc/nginx/conf/
+      volumes:
+      - name: conf
+        configMap:
+          name: synapse-nginx-config
+      - name: certs
+        secret:
+          secretName: wobscale.chat
+      - name: dh
+        secret:
+          secretName: ingress-dhparam

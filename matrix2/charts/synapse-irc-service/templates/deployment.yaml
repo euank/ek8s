@@ -1,0 +1,37 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: matrix-irc
+    name: matrix-irc
+  name: matrix-irc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: matrix-irc
+      name: matrix-irc
+  template:
+    metadata:
+      annotations:
+        app: matrix-irc
+      labels:
+        app: matrix-irc
+        name: matrix-irc
+    spec:
+      containers:
+      - name: matrix-irc
+        image: "euank/matrix-irc@sha256:19a79abfa86c3ae07cf8526b53857e7d7eb1fd730ecaaf035888a545beeab209"
+        volumeMounts:
+        - name: conf
+          mountPath: /conf/
+        - name: data
+          mountPath: /data/
+      volumes:
+      - name: conf
+        configMap:
+          name: matrix-irc-config
+      - name: data
+        nfs:
+          server: {{ .Values.service.nfs.server }}
+          path: {{ .Values.service.nfs.path }}

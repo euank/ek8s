@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: synapse-backregister
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: synapse-backregister
+    spec:
+      containers:
+      - name: backregister
+        image: euank/synapse-backregister:latest
+        env:
+          - name: SYNAPSE_SERVER
+            value: https://wobscale.chat
+          - name: SYNAPSE_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: synapse-shared-secret
+                key: shared-secret

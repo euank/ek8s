@@ -1,0 +1,7 @@
+name: synapse
+description: My synapse stuff
+version: 0.1.0
+keywords:
+  - matrix
+  - synapse
+  - chat

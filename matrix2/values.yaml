@@ -1,0 +1,6 @@
+matrix:
+  registration:
+    secretPath: someLongSecret
+  synapse:
+    nfsDataPath: /path/to/data
+    nfsServer: 1.2.3.4

@@ -1,0 +1,69 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: synapse
+    name: synapse
+  name: synapse
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: synapse
+      name: synapse
+  template:
+    metadata:
+      annotations:
+        app: synapse
+      labels:
+        app: synapse
+        name: synapse
+    spec:
+      containers:
+      - name: synapse
+        image: euank/synapse@sha256:9f294b61a56521e6f7c77cfda6385e7f29d0c42a40645e48544e3f972d7761ca
+        resources:
+          requests:
+            memory: 1500Mi
+        volumeMounts:
+        - name: data
+          mountPath: /data/
+        - name: secret
+          mountPath: /secret/
+        - name: conf
+          mountPath: /conf/
+        - name: logconf
+          mountPath: /base-conf/
+        - name: certs
+          mountPath: /certs/
+        - name: dh
+          mountPath: /dh/
+        - name: irc-svc
+          mountPath: /matrix-irc/
+      volumes:
+      - name: data
+        nfs:
+          path: {{ .Values.matrix.synapse.nfsDataPath }}
+          server: {{ .Values.matrix.synapse.nfsServer }}
+      - name: secret
+        secret:
+          secretName: synapse-secret
+      - name: conf
+        configMap:
+          name: synapse-config
+      - name: logconf
+        configMap:
+          name: synapse-logconfig
+      - name: certs
+        secret:
+          secretName: wobscale.chat
+      - name: dh
+        secret:
+          secretName: ingress-dhparam
+      - name: irc-svc
+        configMap:
+          name: matrix-irc-config
+          items:
+          - key: registration.yaml
+            path: registration.yaml

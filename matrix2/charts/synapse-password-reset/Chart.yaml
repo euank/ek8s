@@ -1,0 +1,4 @@
+apiVersion: v1
+description: Synapse password reset
+name: synapse-password-reset
+version: 0.1.0
