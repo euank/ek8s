@@ -18,11 +18,11 @@ data:
         - exclusive: true
           regex: '#irc_.*:wobscale\.chat'
       rooms:
-{{ range $channel, $roomIds := .Values.service.mappings -}}
-{{ $roomId := $roomIds -}}
+{{- range $channel, $roomIds := .Values.service.mappings -}}
+{{- range $roomId := $roomIds }}
         - exclusive: false
           regex: {{ $roomId | quote }}
-{{- end }}
+{{- end -}}
 {{- end }}
 
   config.yaml: |-
