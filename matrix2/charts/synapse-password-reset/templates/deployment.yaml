@@ -17,7 +17,7 @@ spec:
       containers:
       - name: synapse-br
         image: euank/synapse-password-reset:a7da248
-        args: ["--db", "postgres://$(SYNAPSE_DB_USER):$(SYNAPSE_DB_PASS)@stolon-proxy-service/synapse", "--pepper", "$(SYNAPSE_PEPPER)", "--token-dir", "tokens"]
+        args: ["--db", "postgres://$(SYNAPSE_DB_USER):$(SYNAPSE_DB_PASS)@192.168.131.1/synapse", "--pepper", "$(SYNAPSE_PEPPER)", "--token-dir", "tokens"]
         # TODO, this has some implicit disk (token-dir), maybe that should be
         # on nfs or maybe I should just fix the program itself..
         env:
