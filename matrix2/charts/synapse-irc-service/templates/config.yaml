@@ -30,7 +30,7 @@ data:
       url: "https://wobscale.chat"
       domain: "wobscale.chat"
     ircService:
-      databaseUri: "nedb://data"
+      databaseUri: "nedb:///data"
       servers:
         irc.wobscale.website:
           port: 6697
