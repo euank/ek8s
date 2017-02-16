@@ -35,8 +35,6 @@ data:
         irc.wobscale.website:
           port: 6697
           ssl: true
-          mappings:
-{{ .Values.service.mappings | toYaml | indent 12 }}
           botConfig:
             nick: "matrix[irc]"
           dynamicChannels:
@@ -45,3 +43,5 @@ data:
             createAlias: true
             joinRule: public
             aliasTemplate: "#irc_$CHANNEL"
+          mappings:
+{{ .Values.service.mappings | toYaml | indent 12 }}
