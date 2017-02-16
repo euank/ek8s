@@ -23,19 +23,19 @@ data:
         maxBytes: 104857600
         backupCount: 10
         filters: [context]
-        level: INFO
+        level: WARN
       console:
         class: logging.StreamHandler
         formatter: precise
 
     loggers:
       synapse:
-        level: INFO
+        level: WARN
 
         synapse.storage.SQL:
-          level: INFO
+          level: WARN
 
     root:
-      level: INFO
+      level: WARN
       handlers: [file, console]
 
