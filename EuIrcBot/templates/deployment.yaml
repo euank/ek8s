@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: euircbot
-        image: "quay.io/euank/euircbot@sha256:6f0a04b72a375f5f5480b32a0a1b4fa5a7237be26d8bce0113c04a457230db7c"
+        image: "quay.io/euank/euircbot:latest"
         resources:
           requests:
             memory: 300Mi
