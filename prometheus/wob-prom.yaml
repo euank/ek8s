@@ -1,8 +1,15 @@
-apiVersion: monitoring.coreos.com/v1alpha1
-kind: Prometheus
+apiVersion: "monitoring.coreos.com/v1alpha1"
+kind: "Prometheus"
 metadata:
   name: wob-prom
   labels:
     prometheus: wob
 spec:
-  version: v1.4.0
+  retention: "48h"
+  storage:
+    selector:
+      matchLabels:
+        app: wob-prom
+    resources:
+      requests:
+        storage: 50Gi
