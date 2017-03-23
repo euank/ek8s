@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prom-blackbox-config
+data:
+  blackbox.yaml: |-
+    modules:
+      http_2xx_v4:
+        prober: http
+        timeout: 5s
+        http:
+          protocol: "tcp4"
+      http_2xx_v6:
+        prober: http
+        timeout: 5s
+        http:
+          protocol: "tcp6"
+      irc_banner:
+        prober: tcp
+        timeout: 5s
+        tcp:
+          query_response:
+          - send: "NICK prober"
+          - send: "USER prober prober prober :prober"
+          - expect: "PING :([^ ]+)"
+            send: "PONG ${1}"
+          - expect: "^:[^ ]+ 001"
