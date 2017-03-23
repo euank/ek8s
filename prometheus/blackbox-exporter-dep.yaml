@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: prom-blackbox-exporter
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: prom-blackbox-exporter
+    spec:
+      # Until k8s supports ipv6
+      hostNetwork: true
+      containers:
+      - name: blackbox-exporter
+        image: prom/blackbox-exporter:v0.4.0
+        args:
+        - "-config.file=/config/blackbox.yaml"
+        ports:
+        - name: metrics
+          containerPort: 9115
+        resources:
+          requests:
+            memory: 30Mi
+            cpu: 100m
+          limits:
+            memory: 60Mi
+            cpu: 200m
+        volumeMounts:
+        - name: config
+          mountPath: "/config/"
+      volumes:
+      - name: config
+        configMap:
+          name: prom-blackbox-config
