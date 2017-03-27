@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: kube-cert-manager-ek
+  name: kube-cert-manager-ek
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kube-cert-manager-ek
+      name: kube-cert-manager-ek
+    spec:
+      containers:
+        - name: kube-cert-manager-ek
+          image: euank/test-kcm:d1c5dfd
+          args:
+            - "-data-dir=/var/lib/cert-manager"
+            - "-acme-url=https://acme-v01.api.letsencrypt.org/directory"
+            - "-gc-interval=-1s"
+            - "-class=ek"
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/cert-manager
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: kube-certs-r53-ek
+                  key: access
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: kube-certs-r53-ek
+                  key: secret
+      volumes:
+        - name: "data"
+          nfs:
+            server: 192.168.131.1
+            path: "/mnt/raid1/nfs/k8s/kube-certs-ek/"
