@@ -1,6 +1,7 @@
 apiVersion: v1
 data:
   body-size: "50m"
+  ssl-dh-param: "default/ingress-dhparam"
 kind: ConfigMap
 metadata:
   name: nginx-load-balancer-conf

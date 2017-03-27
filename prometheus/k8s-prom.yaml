@@ -1,8 +1,0 @@
-apiVersion: monitoring.coreos.com/v1alpha1
-kind: Prometheus
-metadata:
-  name: prometheus-k8s
-  labels:
-    prometheus: k8s
-spec:
-  version: v1.4.0

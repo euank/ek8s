@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: prometheus-k8s
+  name: prometheus-prometheus-k8s
 data:
   prometheus.yaml: |
     global:
