@@ -6,6 +6,9 @@ metadata:
     prometheus: wob
 spec:
   retention: "48h"
+  resources:
+    requests:
+      memory: 500Mi
   storage:
     selector:
       matchLabels:
