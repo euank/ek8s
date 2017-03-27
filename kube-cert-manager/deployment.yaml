@@ -1,0 +1,51 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: kube-cert-manager
+  name: kube-cert-manager
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kube-cert-manager
+      name: kube-cert-manager
+    spec:
+      containers:
+        - name: kube-cert-manager
+          image: euank/test-kcm:d1c5dfd
+          args:
+            - "-data-dir=/var/lib/cert-manager"
+            - "-acme-url=https://acme-v01.api.letsencrypt.org/directory"
+            - "-gc-interval=-1s"
+            - "-class="
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/cert-manager
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: kube-certs-wobscale
+                  key: access
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: kube-certs-wobscale
+                  key: secret
+            - name: CLOUDFLARE_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: kube-certs-cloudflare
+                  key: email
+            - name: CLOUDFLARE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: kube-certs-cloudflare
+                  key: apikey
+      volumes:
+        - name: "data"
+          nfs:
+            server: 192.168.131.1
+            path: "/mnt/raid1/nfs/k8s/kube-certs/"
