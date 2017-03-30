@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: wobscale-paypi-client
+  labels:
+    name: "wobscale-paypi-client"
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: wobscale-paypi-client
+        app: wobscale-paypi-client
+    spec:
+      containers:
+      - name: c
+        image: euank/wobscale-payments-client
+        env:
+        - name: ENV_ENVIRONMENT
+          value: prod
+        - name: ENV_API_URL
+          value: https://paypi.wobscale.website
+        - name: ENV_GITHUB_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: paypi-secrets-prod
+              key: GITHUB_CLIENT_ID
+        - name: ENV_STRIPE_PUBLISHABLE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: paypi-secrets-prod
+              key: STRIPE_PUBLISHABLE_KEY
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            memory: 100Mi
+        ports:
+        - name: http
+          containerPort: 81
