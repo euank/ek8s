@@ -1,1 +1,2 @@
 private-values.yaml
+*.secret.yaml
