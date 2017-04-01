@@ -6,6 +6,7 @@ metadata:
     stable.k8s.psg.io/kcm.enabled: "true"
     stable.k8s.psg.io/kcm.provider: "cloudflare"
     stable.k8s.psg.io/kcm.email: "admin@wobscale.website"
+    ingress.kubernetes.io/proxy-body-size: "50M"
 spec:
   tls:
   - hosts:
