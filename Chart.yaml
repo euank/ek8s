@@ -1,0 +1,16 @@
+---
+name: Helmadon
+version: 0.1
+description: Helm installer for the Mastodon Open Source Social Network
+keywords:
+  - mastodon
+home: https://github.com/johnschultz/helmadon
+sources:
+  - https://github.com/johnschultz/helmadon
+maintainers: # (optional)
+  - name: Johnathon Schultz
+    email: johnathon.schultz@gmail.com
+engine: gotpl # The name of the template engine (optional, defaults to gotpl)
+# icon: A URL to an SVG or PNG image to be used as an icon (optional).
+appVersion: "unknown mastodon version, update Chart.yaml"
+deprecated: false
