@@ -45,6 +45,8 @@ scrape_configs:
       - https://www.wobscale.website
       - https://wobscale.chat/_matrix/client/versions
       - https://pi.wobscale.website
+      - https://pay.wobscale.website
+      - https://paypi.wobscale.website/ping
   relabel_configs:
   - source_labels: [__address__]
     regex: "(.*)(:80)?"
