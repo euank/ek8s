@@ -7,10 +7,10 @@ keywords:
 home: https://github.com/johnschultz/helmadon
 sources:
   - https://github.com/johnschultz/helmadon
-maintainers: # (optional)
+maintainers:
   - name: Johnathon Schultz
     email: johnathon.schultz@gmail.com
-engine: gotpl # The name of the template engine (optional, defaults to gotpl)
-# icon: A URL to an SVG or PNG image to be used as an icon (optional).
+engine: gotpl
+icon: # A URL to an SVG or PNG image to be used as an icon (optional).
 appVersion: "unknown mastodon version, update Chart.yaml"
 deprecated: false
