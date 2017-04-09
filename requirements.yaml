@@ -2,6 +2,12 @@ dependencies:
   - name: postgresql
     version: 0.6.0
     repository: https://kubernetes-charts.storage.googleapis.com/
+    import-values:
+        - child: postgresPassword
+          parent: postgresPassword
   - name: redis
     version: 0.5.1
     repository: https://kubernetes-charts.storage.googleapis.com/
+    import-values:
+      - child: redisPassword
+        parent: redisPassword
