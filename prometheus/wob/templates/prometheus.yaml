@@ -3,7 +3,8 @@ kind: "Prometheus"
 metadata:
   name: wob-prom
   labels:
-    prometheus: wob
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    prometheus: wob-prom
 spec:
   retention: "48h"
   resources:

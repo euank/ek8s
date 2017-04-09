@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: prometheus-wob-prom
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    prometheus: wob-prom
+data:
+  prometheus.yaml: {{ .Files.Get "prometheus-config.yaml" | b64enc }}

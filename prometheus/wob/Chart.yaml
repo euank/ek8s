@@ -1,0 +1,4 @@
+apiVersion: v1
+description: A personal helm chart for deploying the wob prometheus
+name: wob-prom
+version: 0.1.0
