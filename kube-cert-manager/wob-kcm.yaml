@@ -14,11 +14,10 @@ spec:
     spec:
       containers:
         - name: kube-cert-manager
-          image: euank/test-kcm:d1c5dfd
+          image: euank/test-kcm:ff4e54e
           args:
             - "-data-dir=/var/lib/cert-manager"
             - "-acme-url=https://acme-v01.api.letsencrypt.org/directory"
-            - "-gc-interval=-1s"
             - "-class="
           volumeMounts:
             - name: data
