@@ -54,3 +54,5 @@ scrape_configs:
     target_label: instance
   - target_label: __address__
     replacement: prom-blackbox-exporter:9115
+  - target_label: prom_namespace
+    replacement: wob
