@@ -35,7 +35,7 @@ dbPort: 5432
 
 # Federation
 localDomain: "social.dotstar.plus"
-localHTTPS: true
+localHTTPS: false
 
 # Application secrets
 # Generate each with the `rake secret` task (`docker-compose run --rm web rake secret` if you use docker compose)

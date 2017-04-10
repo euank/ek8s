@@ -23,6 +23,7 @@ spec:
           value: {{ .Values.localDomain | quote }}
         - name: LOCAL_HTTPS
           value: {{ default false .Values.localHTTPS | quote }}
+{{ include "mastodon.env_discovery" . | indent 8 }}
 {{ include "mastodon.env_secrets" . | indent 8 }}
         ports:
         - name: web
