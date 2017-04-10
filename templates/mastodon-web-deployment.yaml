@@ -15,50 +15,30 @@ spec:
     spec:
       containers:
       - name: {{ template "fullname" . }}-web
-        image: "{{ .Values.image }}"
-        imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
+        image: {{ .Values.image | quote }}
+        imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
         args: ["bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
         env:
-        - name: PAPERCLIP_SECRET
-          {{- if .Values.paperclipSecret }}
-          value: {{ .Values.paperclipSecret }}
-          {{- else }}
-          value: {{ randAlphaNum 32 | b64enc | quote }}
-          {{- end }}
-        - name: SECRET_KEY_BASE
-          {{- if .Values.secretKeyBase  }}
-          value: {{ .Values.secretKeyBase  }}
-          {{- else }}
-          value: {{ randAlphaNum 32 | b64enc | quote }}
-          {{- end }}
-        - name: OTP_SECRET
-          {{- if .Values.OTPSecret }}
-          value: {{ .Values.OTPSecret }}
-          {{- else }}
-          value: {{ randAlphaNum 32 | b64enc | quote }}
-          {{- end }}
-#        - name: REDIS_PASSWORD
-#          valueFrom:
-#            secretKeyRef:
-#              name: {{ template "fullname" . }}
-#              key: redis-password
+        - name: LOCAL_DOMAIN
+          value: {{ .Values.localDomain | quote }}
+        - name: LOCAL_HTTPS
+          value: {{ default false .Values.localHTTPS | quote }}
+{{ include "mastodon.env_secrets" . | indent 8 }}
         ports:
         - name: web
           containerPort: 3000
-#        livenessProbe:
-#          exec:
-#            command:
-#            - redis-cli
-#            - ping
-#          initialDelaySeconds: 30
-#          timeoutSeconds: 5
-#        readinessProbe:
-#          exec:
-#            command:
-#            - redis-cli
-#            - ping
-#          initialDelaySeconds: 5
-#          timeoutSeconds: 1
+        livenessProbe:
+             httpGet:
+               path: /about
+               port: web
+             initialDelaySeconds: 60
+             periodSeconds: 3
+        readinessProbe:
+             httpGet:
+               path: /about
+               port: web
+             initialDelaySeconds: 3
+             periodSeconds: 3
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
