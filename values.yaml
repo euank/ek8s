@@ -1,9 +1,27 @@
+# this guy doesn't tag at the moment :(
+image: "gargron/mastodon:latest"
+
 ## postgres image repository
-image: "gargron/mastodon"
 ## postgres image version
 ## ref: https://hub.docker.com/r/library/postgres/tags/
-##
-imageTag: "latest"  # this guy doesn't tag at the moment :(
+
+
+## Persistence for assets and system
+persistence:
+  enabled: true
+
+  ## A manually managed Persistent Volume and Claim
+  ## Requires persistence.enabled: true
+  ## If defined, PVC must be created manually before volume will be bound
+  # existingAssetsClaim:
+  # existingSystemClaim:
+
+  ## If defined, volume.beta.kubernetes.io/storage-class: <storageClass>
+  ## Default: volume.alpha.kubernetes.io/storage-class: default
+  ##
+  # storageClass:
+  accessMode: ReadWriteOnce
+  size: 8Gi
 
 
 # Service dependencies
