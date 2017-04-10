@@ -17,9 +17,26 @@ spec:
       - name: {{ template "fullname" . }}-web
         image: "{{ .Values.image }}"
         imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
-        args: ["bundle", "exec", "rails", "s", "-p", "3000", "-b", "'0.0.0.0'"]
-
+        args: ["bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
         env:
+        - name: PAPERCLIP_SECRET
+          {{- if .Values.paperclipSecret }}
+          value: {{ .Values.paperclipSecret }}
+          {{- else }}
+          value: {{ randAlphaNum 32 | b64enc | quote }}
+          {{- end }}
+        - name: SECRET_KEY_BASE
+          {{- if .Values.secretKeyBase  }}
+          value: {{ .Values.secretKeyBase  }}
+          {{- else }}
+          value: {{ randAlphaNum 32 | b64enc | quote }}
+          {{- end }}
+        - name: OTP_SECRET
+          {{- if .Values.OTPSecret }}
+          value: {{ .Values.OTPSecret }}
+          {{- else }}
+          value: {{ randAlphaNum 32 | b64enc | quote }}
+          {{- end }}
 #        - name: REDIS_PASSWORD
 #          valueFrom:
 #            secretKeyRef:
