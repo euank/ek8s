@@ -5,7 +5,6 @@ image: "gargron/mastodon:latest"
 ## postgres image version
 ## ref: https://hub.docker.com/r/library/postgres/tags/
 
-
 ## Persistence for assets and system
 persistence:
   enabled: true
@@ -30,8 +29,11 @@ redisPort: 6379
 dbHost: "db"
 dbUser: "postgres"
 dbName: "postgres"
-dbPass:  # {{ randAlphaNum 12 | b64enc | quote  }}
 dbPort: 5432
+
+postgresql:
+    postgresPassword: changeme
+
 
 # Federation
 localDomain: "social.dotstar.plus"
