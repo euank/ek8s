@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "fullname" . }}-streaming
   labels:
-    app: {{ template "fullname" . }}-streaming-deployment
+    app: {{ template "fullname" . }}-streaming
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"

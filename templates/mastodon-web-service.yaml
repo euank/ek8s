@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ template "fullname" . }}-web
   labels:
-    app: {{ template "fullname" . }}-web-svc
+    app: {{ template "fullname" . }}-web
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
@@ -11,7 +11,7 @@ spec:
   type: LoadBalancer
   ports:
   - name: web
-    port: 3000
+    port: 80
     targetPort: web
   selector:
-    app: {{ template "fullname" . }}-web-deployment
+    app: {{ template "fullname" . }}-web
