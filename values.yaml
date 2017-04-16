@@ -36,6 +36,7 @@ postgresql:
 
 
 # Federation
+#localDomain: "192.168.99.100"
 localDomain: "social.dotstar.plus"
 localHTTPS: false
 
