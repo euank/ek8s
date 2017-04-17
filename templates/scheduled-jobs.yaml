@@ -106,7 +106,7 @@ metadata:
     "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "-5"
 spec:
-  schedule: "*/2 * * * *"
+  schedule: "*/5 * * * *"
   jobTemplate:
     metadata:
       name: {{ template "fullname" . }}-push-refresh-job
