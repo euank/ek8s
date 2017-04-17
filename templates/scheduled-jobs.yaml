@@ -67,7 +67,7 @@ spec:
           - name: {{ template "fullname" . }}-push-clear-job
             image: {{ .Values.image | quote }}
             imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
-            args: ["bundle", "exec", "rake", "mastodon:push:clear"]
+            args: ["bundle", "exec", "rake", "mastodon:daily"]
             env:
             - name: LOCAL_DOMAIN
               value: {{ .Values.localDomain | quote }}

@@ -1,5 +1,4 @@
-# this guy doesn't tag at the moment :(
-image: "gargron/mastodon:latest"
+image: "gargron/mastodon:v1.2"
 
 ## postgres image repository
 ## postgres image version
