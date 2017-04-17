@@ -2,53 +2,7 @@ apiVersion: batch/v2alpha1
 kind: CronJob
 metadata:
   # Unique key of the Job instance
-  name: {{ template "fullname" . }}-media-clear-job
-  labels:
-    app: {{ template "fullname" . }}
-    heritage: {{.Release.Service | quote }}
-    release: {{.Release.Name | quote }}
-    chart: "{{.Chart.Name}}-{{.Chart.Version}}"
-spec:
-  schedule: "0 * * * *"
-  jobTemplate:
-    metadata:
-      name: {{ template "fullname" . }}-media-clear-job
-    spec:
-      template:
-        spec:
-          restartPolicy: Never
-          containers:
-          - name: {{ template "fullname" . }}-media-clear-job
-            image: {{ .Values.image | quote }}
-            imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
-            args: ["bundle", "exec", "rake", "mastodon:media:clear"]
-            env:
-            - name: LOCAL_DOMAIN
-              value: {{ .Values.localDomain | quote }}
-            - name: LOCAL_HTTPS
-              value: {{ default false .Values.localHTTPS | quote }}
-{{ include "mastodon.env_discovery" . | indent 12 }}
-{{ include "mastodon.env_secrets" . | indent 12 }}
-            resources:
-{{ toYaml .Values.resources | indent 14 }}
-            volumeMounts:
-            - name: web-assets
-              mountPath: /mastodon/public/assets
-            - name: web-system
-              mountPath: /mastodon/public/system
-          volumes:
-          - name: web-assets
-            persistentVolumeClaim:
-              claimName: {{ .Values.persistence.existingAssetsClaim | default (include "fullname" .) }}-web-assets
-          - name: web-system
-            persistentVolumeClaim:
-              claimName: {{ .Values.persistence.existingSystemClaim | default (include "fullname" .) }}-web-system
----
-apiVersion: batch/v2alpha1
-kind: CronJob
-metadata:
-  # Unique key of the Job instance
-  name: {{ template "fullname" . }}-push-clear-job
+  name: {{ template "fullname" . }}-daily
   labels:
     app: {{ template "fullname" . }}
     heritage: {{.Release.Service | quote }}
@@ -58,118 +12,16 @@ spec:
   schedule: "0 0 * * *"
   jobTemplate:
     metadata:
-      name: {{ template "fullname" . }}-push-clear-job
+      name: {{ template "fullname" . }}-daily
     spec:
       template:
         spec:
           restartPolicy: Never
           containers:
-          - name: {{ template "fullname" . }}-push-clear-job
+          - name: {{ template "fullname" . }}-daily
             image: {{ .Values.image | quote }}
             imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
             args: ["bundle", "exec", "rake", "mastodon:daily"]
-            env:
-            - name: LOCAL_DOMAIN
-              value: {{ .Values.localDomain | quote }}
-            - name: LOCAL_HTTPS
-              value: {{ default false .Values.localHTTPS | quote }}
-{{ include "mastodon.env_discovery" . | indent 12 }}
-{{ include "mastodon.env_secrets" . | indent 12 }}
-            resources:
-{{ toYaml .Values.resources | indent 14 }}
-            volumeMounts:
-            - name: web-assets
-              mountPath: /mastodon/public/assets
-            - name: web-system
-              mountPath: /mastodon/public/system
-          volumes:
-          - name: web-assets
-            persistentVolumeClaim:
-              claimName: {{ .Values.persistence.existingAssetsClaim | default (include "fullname" .) }}-web-assets
-          - name: web-system
-            persistentVolumeClaim:
-              claimName: {{ .Values.persistence.existingSystemClaim | default (include "fullname" .) }}-web-system
----
-apiVersion: batch/v2alpha1
-kind: CronJob
-metadata:
-  # Unique key of the Job instance
-  name: {{ template "fullname" . }}-push-refresh-job
-  labels:
-    app: {{ template "fullname" . }}
-    heritage: {{.Release.Service | quote }}
-    release: {{.Release.Name | quote }}
-    chart: "{{.Chart.Name}}-{{.Chart.Version}}"
-  annotations:
-    # This is what defines this resource as a hook. Without this line, the
-    # job is considered part of the release.
-    "helm.sh/hook": post-install,post-upgrade
-    "helm.sh/hook-weight": "-5"
-spec:
-  schedule: "*/5 * * * *"
-  jobTemplate:
-    metadata:
-      name: {{ template "fullname" . }}-push-refresh-job
-    spec:
-      template:
-        spec:
-          restartPolicy: Never
-          containers:
-          - name: {{ template "fullname" . }}push-refresh-job
-            image: {{ .Values.image | quote }}
-            imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
-            args: ["bundle", "exec", "rake", "mastodon:push:refresh"]
-            env:
-            - name: LOCAL_DOMAIN
-              value: {{ .Values.localDomain | quote }}
-            - name: LOCAL_HTTPS
-              value: {{ default false .Values.localHTTPS | quote }}
-{{ include "mastodon.env_discovery" . | indent 12 }}
-{{ include "mastodon.env_secrets" . | indent 12 }}
-            resources:
-{{ toYaml .Values.resources | indent 14 }}
-            volumeMounts:
-            - name: web-assets
-              mountPath: /mastodon/public/assets
-            - name: web-system
-              mountPath: /mastodon/public/system
-          volumes:
-          - name: web-assets
-            persistentVolumeClaim:
-              claimName: {{ .Values.persistence.existingAssetsClaim | default (include "fullname" .) }}-web-assets
-          - name: web-system
-            persistentVolumeClaim:
-              claimName: {{ .Values.persistence.existingSystemClaim | default (include "fullname" .) }}-web-system
----
-apiVersion: batch/v2alpha1
-kind: CronJob
-metadata:
-  # Unique key of the Job instance
-  name: {{ template "fullname" . }}-feeds-clear-job
-  labels:
-    app: {{ template "fullname" . }}
-    heritage: {{.Release.Service | quote }}
-    release: {{.Release.Name | quote }}
-    chart: "{{.Chart.Name}}-{{.Chart.Version}}"
-  annotations:
-    # This is what defines this resource as a hook. Without this line, the
-    # job is considered part of the release.
-    "helm.sh/hook": post-install,post-upgrade
-    "helm.sh/hook-weight": "-5"
-spec:
-  schedule: "*/15 * * * *"
-  jobTemplate:
-    metadata:
-      name: {{ template "fullname" . }}-feeds-clear-job
-    spec:
-      template:
-        spec:
-          restartPolicy: Never
-          containers:
-          - name: {{ template "fullname" . }}feeds-clear-job
-            image: {{ .Values.image | quote }}
-            imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
-            args: ["bundle", "exec", "rake", "mastodon:feeds:clear"]
             env:
             - name: LOCAL_DOMAIN
               value: {{ .Values.localDomain | quote }}
