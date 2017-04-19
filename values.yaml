@@ -59,10 +59,10 @@ localHTTPS: false
 # E-mail configuration
 # Note: Mailgun and SparkPost (https://sparkpo.st/smtp) each have good free tiers
 SMTPServer: "smtp.mailgun.org"
-SMTPPort: 587
+SMTPPort: 2525
 SMTPLogin: "postmaster@mail.dotstar.plus"
 SMTPPassword: "59cf8dc634a2b9b4aebdc2a3fe93a405"
-SMTPFromAddress: "masty@social.dotstar.plus"
+SMTPDomain: "mail.dotstar.plus"
 
 # Optional asset host for multi-server setups
 # CDN_HOST: assets.example.com
