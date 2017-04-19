@@ -35,8 +35,7 @@ postgresql:
 
 
 # Federation
-#localDomain: "192.168.99.100"
-localDomain: "social.dotstar.plus"
+localDomain: "localhost"
 localHTTPS: false
 
 # Application secrets
@@ -58,11 +57,11 @@ localHTTPS: false
 
 # E-mail configuration
 # Note: Mailgun and SparkPost (https://sparkpo.st/smtp) each have good free tiers
-SMTPServer: "smtp.mailgun.org"
-SMTPPort: 2525
-SMTPLogin: "postmaster@mail.dotstar.plus"
-SMTPPassword: "59cf8dc634a2b9b4aebdc2a3fe93a405"
-SMTPDomain: "mail.dotstar.plus"
+# SMTPServer: 
+# SMTPPort: 
+# SMTPLogin:
+# SMTPPassword: 
+# SMTPDomain:
 
 # Optional asset host for multi-server setups
 # CDN_HOST: assets.example.com
