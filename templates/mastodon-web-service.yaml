@@ -8,8 +8,7 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
-  type: LoadBalancer
-  #type: NodePort
+  type: NodePort
   ports:
   - name: web
     port: 80

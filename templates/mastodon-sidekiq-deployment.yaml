@@ -19,7 +19,7 @@ spec:
         imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
         args: ["bundle", "exec", "sidekiq", "-q", "default", "-q", "mailers", "-q", "pull", "-q", "push"]
         env:
-{{ include "mastodon.env_discovery" . | indent 8 }}
+{{ include "mastodon.shared_env" . | indent 8 }}
 {{ include "mastodon.env_secrets" . | indent 8 }}
         livenessProbe:
              exec:

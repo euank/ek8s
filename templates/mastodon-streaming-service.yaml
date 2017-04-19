@@ -9,7 +9,6 @@ metadata:
     heritage: "{{ .Release.Service }}"
 spec:
   type: LoadBalancer
-  #type: NodePort
   ports:
   - name: streaming
     port: 4000

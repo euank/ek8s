@@ -23,11 +23,7 @@ spec:
             imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
             args: ["bundle", "exec", "rake", "mastodon:daily"]
             env:
-            - name: LOCAL_DOMAIN
-              value: {{ .Values.localDomain | quote }}
-            - name: LOCAL_HTTPS
-              value: {{ default false .Values.localHTTPS | quote }}
-{{ include "mastodon.env_discovery" . | indent 12 }}
+{{ include "mastodon.shared_env" . | indent 12 }}
 {{ include "mastodon.env_secrets" . | indent 12 }}
             resources:
 {{ toYaml .Values.resources | indent 14 }}

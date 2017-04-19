@@ -25,11 +25,7 @@ spec:
         imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
         args: ["bundle", "exec", "rails", "db:migrate"]
         env:
-        - name: LOCAL_DOMAIN
-          value: {{ .Values.localDomain | quote }}
-        - name: LOCAL_HTTPS
-          value: {{ default false .Values.localHTTPS | quote }}
-{{ include "mastodon.env_discovery" . | indent 8 }}
+{{ include "mastodon.shared_env" . | indent 8 }}
 {{ include "mastodon.env_secrets" . | indent 8 }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
@@ -73,11 +69,7 @@ spec:
         imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
         args: ["bundle", "exec", "rails", "assets:precompile"]
         env:
-        - name: LOCAL_DOMAIN
-          value: {{ .Values.localDomain | quote }}
-        - name: LOCAL_HTTPS
-          value: {{ default false .Values.localHTTPS | quote }}
-{{ include "mastodon.env_discovery" . | indent 8 }}
+{{ include "mastodon.shared_env" . | indent 8 }}
 {{ include "mastodon.env_secrets" . | indent 8 }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}

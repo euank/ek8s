@@ -19,7 +19,7 @@ spec:
         imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
         args: ["npm", "run", "start"]
         env:
-{{ include "mastodon.env_discovery" . | indent 8 }}
+{{ include "mastodon.shared_env" . | indent 8 }}
 {{ include "mastodon.env_secrets" . | indent 8 }}
         ports:
         - name: streaming
