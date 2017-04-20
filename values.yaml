@@ -1,4 +1,4 @@
-image: "gargron/mastodon:v1.2"
+image: "gargron/mastodon:v1.2.1"
 
 ## postgres image repository
 ## postgres image version
