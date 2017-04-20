@@ -37,7 +37,7 @@ postgresql:
 # Federation
 #localDomain: "192.168.99.100"
 localDomain: "social.dotstar.plus"
-localHTTPS: false
+localHTTPS: true
 
 # Application secrets
 # Generate each with the `rake secret` task (`docker-compose run --rm web rake secret` if you use docker compose)
