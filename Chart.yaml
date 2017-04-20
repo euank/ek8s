@@ -13,5 +13,5 @@ maintainers:
     email: johnathon.schultz@gmail.com
 engine: gotpl
 icon: # A URL to an SVG or PNG image to be used as an icon (optional).
-appVersion: "v1.2"
+appVersion: "v1.2.1"
 deprecated: false

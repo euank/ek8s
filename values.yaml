@@ -1,4 +1,4 @@
-image: "gargron/mastodon:v1.2"
+image: "gargron/mastodon:v1.2.1"
 
 ## postgres image repository
 ## postgres image version
@@ -36,7 +36,7 @@ postgresql:
 
 # Federation
 localDomain: "localhost"
-localHTTPS: false
+localHTTPS: true
 
 # Application secrets
 # Generate each with the `rake secret` task (`docker-compose run --rm web rake secret` if you use docker compose)
