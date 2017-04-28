@@ -1,0 +1,87 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  # Unique key of the Job instance
+  name: {{ template "fullname" . }}-db-setup
+  labels:
+    app: {{ template "fullname" . }}
+    heritage: {{.Release.Service | quote }}
+    release: {{.Release.Name | quote }}
+    chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "-5"
+spec:
+  template:
+    metadata:
+      name: {{ template "fullname" . }}-db-setup
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: {{ template "fullname" . }}-db-setup
+        image: {{ .Values.image | quote }}
+        imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+        args: ["bundle", "exec", "rails", "db:migrate"]
+        env:
+{{ include "mastodon.shared_env" . | indent 8 }}
+{{ include "mastodon.env_secrets" . | indent 8 }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        volumeMounts:
+        - name: web-assets
+          mountPath: /mastodon/public/assets
+        - name: web-system
+          mountPath: /mastodon/public/system
+      volumes:
+      - name: web-assets
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingAssetsClaim | default (include "fullname" .) }}-web-assets
+      - name: web-system
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingSystemClaim | default (include "fullname" .) }}-web-system
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  # Unique key of the Job instance
+  name: {{ template "fullname" . }}-asset-compile
+  labels:
+    app: {{ template "fullname" . }}
+    heritage: {{.Release.Service | quote }}
+    release: {{.Release.Name | quote }}
+    chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "-5"
+spec:
+  template:
+    metadata:
+      name: {{ template "fullname" . }}-asset-compile
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: {{ template "fullname" . }}-asset-compile
+        image: {{ .Values.image | quote }}
+        imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+        args: ["bundle", "exec", "rails", "assets:precompile"]
+        env:
+{{ include "mastodon.shared_env" . | indent 8 }}
+{{ include "mastodon.env_secrets" . | indent 8 }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        volumeMounts:
+        - name: web-assets
+          mountPath: /mastodon/public/assets
+        - name: web-system
+          mountPath: /mastodon/public/system
+      volumes:
+      - name: web-assets
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingAssetsClaim | default (include "fullname" .) }}-web-assets
+      - name: web-system
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingSystemClaim | default (include "fullname" .) }}-web-system

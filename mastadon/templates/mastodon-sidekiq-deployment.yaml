@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}-sidekiq
+  labels:
+    app: {{ template "fullname" . }}-sidekiq
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}-sidekiq
+    spec:
+      containers:
+      - name: {{ template "fullname" . }}-sidekiq
+        image: {{ .Values.image | quote }}
+        imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+        args: ["bundle", "exec", "sidekiq", "-q", "default", "-q", "mailers", "-q", "pull", "-q", "push"]
+        env:
+{{ include "mastodon.shared_env" . | indent 8 }}
+{{ include "mastodon.env_secrets" . | indent 8 }}
+        livenessProbe:
+             exec:
+               command:
+               - echo
+               - "this is not a very good healthcheck"
+             initialDelaySeconds: 60
+             periodSeconds: 3
+        readinessProbe:
+             exec:
+               command:
+               - echo
+               - "this is not a very good healthcheck"
+             initialDelaySeconds: 3
+             periodSeconds: 3
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        volumeMounts:
+        - name: web-system
+          mountPath: /mastodon/public/system
+      volumes:
+      - name: web-system
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingSystemClaim | default (include "fullname" .) }}-web-system

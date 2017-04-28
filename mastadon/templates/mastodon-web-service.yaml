@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "fullname" . }}-web
+  labels:
+    app: {{ template "fullname" . }}-web
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  type: NodePort
+  ports:
+  - name: web
+    port: 80
+    targetPort: web
+  selector:
+    app: {{ template "fullname" . }}-web

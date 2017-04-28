@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "fullname" . }}-streaming
+  labels:
+    app: {{ template "fullname" . }}-streaming
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  type: LoadBalancer
+  ports:
+  - name: streaming
+    port: 4000
+    targetPort: streaming
+  selector:
+    app: {{ template "fullname" . }}-streaming

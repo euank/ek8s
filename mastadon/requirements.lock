@@ -1,0 +1,17 @@
+dependencies:
+- condition: ""
+  enabled: false
+  import-values: null
+  name: postgresql
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  tags: null
+  version: 0.6.0
+- condition: ""
+  enabled: false
+  import-values: null
+  name: kube-lego
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  tags: null
+  version: 0.1.8
+digest: sha256:d7775a2d3db9b09af4c27ae947478c855e7f80309f85d7bda2fbb6cfa4a882c7
+generated: 2017-04-17T19:09:07.746244558-07:00
