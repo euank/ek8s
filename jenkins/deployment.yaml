@@ -16,12 +16,12 @@ spec:
         image: "jenkins:2.46.2"
         env:
         - name: JAVA_OPTS
-          value: "-Xmx600m"
+          value: "-Xmx700m"
         resources:
           requests:
-            memory: 600Mi
+            memory: 800Mi
           limits:
-            memory: 700Mi
+            memory: 1200Mi
         volumeMounts:
         - name: data
           mountPath: "/var/jenkins_home"
