@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "jenkins-master"
+  labels:
+    app: "jenkins-master"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: jenkins-master
+    spec:
+      containers:
+      - name: jenkins-master
+        image: "jenkins:2.46.2"
+        env:
+        - name: JAVA_OPTS
+          value: "-Xmx600m"
+        resources:
+          requests:
+            memory: 600Mi
+          limits:
+            memory: 700Mi
+        volumeMounts:
+        - name: data
+          mountPath: "/var/jenkins_home"
+      volumes:
+        - name: data
+          nfs:
+            server: 192.168.131.1
+            path: "/mnt/raid1/nfs/k8s/jenkins/"
