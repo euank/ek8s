@@ -14,9 +14,10 @@ spec:
     spec:
       containers:
       - name: prometheus-operator
-        image: quay.io/coreos/prometheus-operator:v0.10.0
+        image: euank/prometheus-operator:067accf # 0.10.0 + kubelet on https only
         args:
         - -analytics=false
+        - -kubelet-service=kube-system/kubelet
         env:
         - name: GLOG_v
           value: "5"
