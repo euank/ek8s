@@ -6,8 +6,7 @@ metadata:
     prometheus: k8s
 spec:
   replicas: 1
-  retention: "12h"
-  version: v1.5.2
+  retention: "2h"
   serviceMonitorSelector:
     matchExpression:
     - {key: k8s-apps, operator: Exists}
@@ -17,11 +16,7 @@ spec:
       prometheus: k8s
   resources:
     requests:
-      # 2Gi is default, but won't schedule if you don't have a node with >2Gi
-      # memory. Modify based on your target and time-series count for
-      # production use. This value is mainly meant for demonstration/testing
-      # purposes.
-      memory: 500Mi
+      memory: 800Mi
     limits:
       memory: 1Gi
   storage:
@@ -34,5 +29,5 @@ spec:
   alerting:
     alertmanagers:
     - namespace: monitoring
-      name: alertmanager-main
+      name: alertmanager-k8s
       port: web
