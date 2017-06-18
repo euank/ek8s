@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "syncplay-server"
+  labels:
+    name: "syncplay-server"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: syncplay-server
+        app: syncplay-server
+    spec:
+      containers:
+      - name: syncplay-server
+        image: euank/syncplay-server:v1.4.0
+        env:
+        - name: SALT
+          valueFrom:
+            secretKeyRef:
+              name: syncplay-server-salt
+              key: salt
+        resources:
+          limits:
+            memory: 100Mi
+        ports:
+          - name: syncplay
+            containerPort: 8999
