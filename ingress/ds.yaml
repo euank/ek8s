@@ -50,10 +50,13 @@ spec:
           hostPort: 80
         - containerPort: 443
           hostPort: 443
+        - containerPort: 8999
+          hostPort: 8999
         args:
         - /nginx-ingress-controller
         - --default-backend-service=$(POD_NAMESPACE)/default-http-backend
-        - --configmap=default/nginx-load-balancer-conf
+        - --configmap=$(POD_NAMESPACE)/nginx-load-balancer-conf
+        - --tcp-services-configmap=$(POD_NAMESPACE)/nginx-tcp-ingress-configmap
         volumeMounts:
         - mountPath: /etc/nginx-ssl/dhparam
           name: ingress-dhparam
