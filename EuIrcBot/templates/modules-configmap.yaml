@@ -51,3 +51,7 @@ data:
     {
       "wotd_key": {{ .Values.euircbot.moduleConfig.wotd.wotdKey | quote }}
     }
+  cmdio.json: |-
+    {
+      "accessToken": {{ .Values.euircbot.moduleConfig.cmdio.accessToken }}
+    }
