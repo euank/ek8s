@@ -53,5 +53,5 @@ data:
     }
   cmdio.json: |-
     {
-      "accessToken": {{ .Values.euircbot.moduleConfig.cmdio.accessToken }}
+      "accessToken": {{ .Values.euircbot.moduleConfig.cmdio.accessToken | quote }}
     }
