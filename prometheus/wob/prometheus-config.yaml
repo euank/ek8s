@@ -58,3 +58,22 @@ scrape_configs:
     replacement: prom-blackbox-exporter:9115
   - target_label: prom_namespace
     replacement: wob
+- job_name: irc
+  metrics_path: /probe
+  static_configs:
+  - targets:
+    - ganoo.irc.wobscale.website:6697
+    - mongo.irc.wobscale.website:6697
+    - hub.irc.wobscale.website:6697
+    - irc.wobscale.website:6697
+  relabel_configs:
+  - source_labels: [__address__]
+    regex: "(.*)(:6697)?"
+    target_label: __param_target
+    replacement: "${1}"
+  - source_labels: [__param_target]
+    target_label: instance
+  - target_label: __address__
+    replacement: prom-irc-exporter:8080
+  - target_label: prom_namespace
+    replacement: wob
