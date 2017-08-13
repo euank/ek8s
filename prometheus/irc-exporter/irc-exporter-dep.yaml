@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: prom-irc-exporter
-        image: wobscale/prometheus-irc-exporter:4f03bd6
+        image: wobscale/prometheus-irc-exporter:8eb3144
         ports:
         - name: metrics
           containerPort: 8080
