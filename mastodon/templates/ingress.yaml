@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: mastodon-ing
+  annotations:
+    stable.k8s.psg.io/kcm.enabled: "true"
+    stable.k8s.psg.io/kcm.provider: "http"
+    stable.k8s.psg.io/kcm.email: "letsencrypt-k8s@euank.com"
+    ingress.kubernetes.io/proxy-body-size: "20M"
+spec:
+  tls:
+  - hosts:
+    - wobscale.social
+    secretName: wobscale.social
+  rules:
+  - host: wobscale.social
+    http:
+      paths:
+      - path: "/"
+        backend:
+          serviceName: mastodon
+          servicePort: 80
+      - path: "/api/v1/streaming"
+        backend:
+          serviceName: mastodon-streaming
+          servicePort: 4000
+      - path: "/.well-known/acme-challenge/"
+        backend:
+          serviceName: kube-cert-manager
+          servicePort: 8080

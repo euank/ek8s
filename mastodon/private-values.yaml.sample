@@ -1,0 +1,10 @@
+mastodon:
+  db:
+    user: mastodon
+    pass: password
+  smtp:
+    user: AKID
+    password: SECRET
+  otpSecret: <value from `docker run -e RAILS_ENV=production  gargron/mastodon bundle exec rake secret`>
+  secretKeyBase: same ^
+  paperclipSecret: same ^

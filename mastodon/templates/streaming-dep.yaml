@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mastodon-streaming
+  labels:
+    app: mastodon-streaming
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: mastodon-streaming
+    spec:
+      containers:
+      - name: mastodon-streaming
+        image: gargron/mastodon:v1.5.1
+        command: ["npm", "run", "start"]
+        ports:
+        - containerPort: 4000
+        env:
+{{ include "environment" . | indent 8 }}

@@ -1,0 +1,71 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mastodon
+  labels:
+    app: mastodon
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: mastodon
+    spec:
+      containers:
+      - name: mastodon
+        image: "gargron/mastodon:v1.5.1"
+        # Note: this has us running as root, unlike the regular upstream command
+        # To not run as root, execute /usr/local/bin/run instead of tini.
+        # However, since we're on overlay2 and the default entrypoint does a
+        # chown which takes about 5 minutes on the 4.12 kernel, skip it and run
+        # as root because that's really dumb.
+        command: ["sh", "-c", "cp /config/favicon.ico /mastodon/public/favicon.ico && exec /sbin/tini -- bundle exec puma -C config/puma.rb"]
+        ports:
+        - containerPort: 3000
+        env:
+        - name: RAILS_ENV
+          value: production
+        - name: PORT
+          value: "3000"
+{{ include "environment" . | indent 8 }}
+        livenessProbe:
+          tcpSocket:
+            port: 3000
+          initialDelaySeconds: 300
+        readinessProbe:
+          tcpSocket:
+            port: 3000
+          initialDelaySeconds: 300
+        resources:
+          limits:
+            memory: 1.5Gi
+          requests:
+            memory: 1.5Gi
+        volumeMounts:
+        - name: assets
+          mountPath: /mastodon/public/assets
+        - name: packs
+          mountPath: /mastodon/public/packs
+        - name: system
+          mountPath: /mastodon/public/system
+        - name: site-config 
+          mountPath: /config/
+      volumes:
+      - name: assets
+        nfs:
+          server: 192.168.131.1
+          path: /mnt/raid1/nfs/k8s/mastodon/assets
+      - name: packs
+        nfs:
+          server: 192.168.131.1
+          path: /mnt/raid1/nfs/k8s/mastodon/packs
+      - name: system
+        nfs:
+          server: 192.168.131.1
+          path: /mnt/raid1/nfs/k8s/mastodon/system
+      - name: site-config
+        nfs:
+          server: 192.168.131.1
+          path: /mnt/raid1/nfs/k8s/mastodon/config/

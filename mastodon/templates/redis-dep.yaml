@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mastodon-redis
+  labels:
+    app: mastodon-redis
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mastodon-redis
+    spec:
+      containers:
+      - name: mastodon-redis
+        image: redis:3.2
+        command: ["redis-server", "--appendonly", "yes"]
+        ports:
+        - containerPort: 6379
+        livenessProbe:
+          exec:
+            command: ["redis-cli", "ping"]
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        volumeMounts:
+        - name: data
+          mountPath: /data
+      volumes:
+      - name: data
+        nfs:
+          server: 192.168.131.1
+          path: /mnt/raid1/nfs/k8s/mastodon-redis

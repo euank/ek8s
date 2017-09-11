@@ -1,0 +1,7 @@
+name: mastodon
+description: "a mastodon server: you don't want to use this, it's custom to me"
+version: 0.1.0
+maintainers:
+- name: Euan Kemp
+keywords:
+- mastodon
