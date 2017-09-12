@@ -50,4 +50,14 @@
     secretKeyRef:
       name: mastodon-secrets
       key: paperclipSecret
+- name: VAPID_PUBLIC_KEY
+  valueFrom:
+    secretKeyRef:
+      name: mastodon-secrets
+      key: vapidPublicKey
+- name: VAPID_PRIVATE_KEY
+  valueFrom:
+    secretKeyRef:
+      name: mastodon-secrets
+      key: vapidPrivateKey
 {{- end -}}
