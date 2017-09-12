@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: kube-cert-manager-ek
-          image: euank/test-kcm:2017-06-02-6cf132d
+          image: euank/test-kcm:2017-06-05-c3b0ee7
           args:
             - "-data-dir=/var/lib/cert-manager"
             - "-acme-url=https://acme-v01.api.letsencrypt.org/directory"
