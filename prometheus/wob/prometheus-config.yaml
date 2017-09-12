@@ -62,10 +62,10 @@ scrape_configs:
   metrics_path: /probe
   static_configs:
   - targets:
-    - ganoo.irc.wobscale.website:6697
-    - mongo.irc.wobscale.website:6697
-    - hub.irc.wobscale.website:6697
-    - irc.wobscale.website:6697
+    - ircs://ganoo.irc.wobscale.website:6697
+    - ircs://mongo.irc.wobscale.website:6697
+    - ircs://hub.irc.wobscale.website:6697
+    - ircs://irc.wobscale.website:6697
   relabel_configs:
   - source_labels: [__address__]
     regex: "(.*)(:6697)?"
