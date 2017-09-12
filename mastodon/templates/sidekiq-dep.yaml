@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: mastodon-sidekiq
-        image: gargron/mastodon:v1.5.1
+        image: gargron/mastodon:v1.6.0
         args: ["bundle", "exec", "sidekiq", "-q", "default", "-q", "mailers", "-q", "pull", "-q", "push"]
         ports:
         - containerPort: 4000
