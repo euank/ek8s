@@ -8,3 +8,4 @@ metadata:
     prometheus: wob-prom
 data:
   prometheus.yaml: {{ .Files.Get "prometheus-config.yaml" | b64enc }}
+  configmaps.json: {{ .Files.Get "prometheus-rules.json" | b64enc }}
