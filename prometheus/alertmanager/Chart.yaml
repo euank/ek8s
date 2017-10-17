@@ -1,0 +1,4 @@
+apiVersion: v1
+description: personal chart, you don't want this
+name: alertmanager
+version: 0.1.0

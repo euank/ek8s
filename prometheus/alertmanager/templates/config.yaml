@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: alertmanager-main
+data:
+  alertmanager.yaml: {{ .Files.Get "alertmanager-config.secret.yaml" | b64enc | quote }}
