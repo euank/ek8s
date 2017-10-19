@@ -14,12 +14,13 @@ spec:
       containers:
       - name: euircbot
         image: "quay.io/euank/euircbot:latest"
+        command: ["node", "--max_old_space_size=400", "index.js"]
         resources:
           requests:
-            memory: 300Mi
+            memory: 600Mi
           limits:
             # TODO, lower this number once memory leaks are plugged
-            memory: 500Mi
+            memory: 800Mi
         volumeMounts:
         - name: module-config
           mountPath: "/usr/src/app/conf/"
