@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: mastodon-streaming
-        image: gargron/mastodon:v1.6.0
+        image: gargron/mastodon:v2.0.0
         command: ["npm", "run", "start"]
         ports:
         - containerPort: 4000
