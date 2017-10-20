@@ -33,8 +33,6 @@
   value: "true"
 - name: SINGLE_USER_MODE
   value: "false"
-- name: EMAIL_DOMAIN_WHITELIST
-  value: "wobscale.website|euank.com"
 - name: SECRET_KEY_BASE
   valueFrom:
     secretKeyRef:
