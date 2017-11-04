@@ -8,6 +8,9 @@ spec:
   replicas: 1
   strategy:
     type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 2
   template:
     metadata:
       labels:
@@ -15,7 +18,7 @@ spec:
     spec:
       containers:
       - name: mastodon-sidekiq
-        image: gargron/mastodon:v2.0.0
+        image: euank/mastodon:v2.0.0-4-gb0d1dda8
         args: ["bundle", "exec", "sidekiq", "-q", "default", "-q", "mailers", "-q", "pull", "-q", "push"]
         ports:
         - containerPort: 4000

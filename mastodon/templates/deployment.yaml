@@ -8,6 +8,9 @@ spec:
   replicas: 1
   strategy:
     type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 2
   template:
     metadata:
       labels:
@@ -15,7 +18,7 @@ spec:
     spec:
       containers:
       - name: mastodon
-        image: "gargron/mastodon:v2.0.0"
+        image: "euank/mastodon:v2.0.0-4-gb0d1dda8"
         # Note: this has us running as root, unlike the regular upstream command
         # To not run as root, execute /usr/local/bin/run instead of tini.
         # However, since we're on overlay2 and the default entrypoint does a
@@ -33,11 +36,11 @@ spec:
         livenessProbe:
           tcpSocket:
             port: 3000
-          initialDelaySeconds: 300
+          initialDelaySeconds: 15
         readinessProbe:
           tcpSocket:
             port: 3000
-          initialDelaySeconds: 300
+          initialDelaySeconds: 15
         resources:
           limits:
             memory: 1.5Gi
