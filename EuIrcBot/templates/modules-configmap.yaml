@@ -55,3 +55,9 @@ data:
     {
       "accessToken": {{ .Values.euircbot.moduleConfig.cmdio.accessToken | quote }}
     }
+  amazon.json: |-
+    {
+      "awsId": {{ .Values.euircbot.moduleConfig.amznRetail.awsId | quote }},
+      "awsTag": {{ .Values.euircbot.moduleConfig.amznRetail.awsTag | quote }},
+      "awsSecret": {{ .Values.euircbot.moduleConfig.amznRetail.awsSecret | quote }}
+    }
