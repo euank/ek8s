@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: mastodon
-        image: "euank/mastodon:v2.0.0-4-gb0d1dda8"
+        image: "wobscale/mastodon:v2.1.0-4-ge051b1ea"
         # Note: this has us running as root, unlike the regular upstream command
         # To not run as root, execute /usr/local/bin/run instead of tini.
         # However, since we're on overlay2 and the default entrypoint does a

@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: mastodon-streaming
-        image: euank/mastodon:v2.0.0-4-gb0d1dda8
+        image: wobscale/mastodon:v2.1.0-4-ge051b1ea
         command: ["npm", "run", "start"]
         ports:
         - containerPort: 4000
