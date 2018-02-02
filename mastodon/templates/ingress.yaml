@@ -3,15 +3,12 @@ kind: Ingress
 metadata:
   name: mastodon-ing
   annotations:
-    stable.k8s.psg.io/kcm.enabled: "true"
-    stable.k8s.psg.io/kcm.provider: "http"
-    stable.k8s.psg.io/kcm.email: "letsencrypt-k8s@euank.com"
     ingress.kubernetes.io/proxy-body-size: "20M"
 spec:
   tls:
   - hosts:
     - wobscale.social
-    secretName: wobscale.social
+    secretName: wobscale-social-cert-2
   rules:
   - host: wobscale.social
     http:
@@ -24,7 +21,3 @@ spec:
         backend:
           serviceName: mastodon-streaming
           servicePort: 4000
-      - path: "/.well-known/acme-challenge/"
-        backend:
-          serviceName: kube-cert-manager
-          servicePort: 8080
