@@ -2,15 +2,11 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: wobscale-paypi-server
-  annotations:
-    stable.k8s.psg.io/kcm.enabled: "true"
-    stable.k8s.psg.io/kcm.provider: "route53"
-    stable.k8s.psg.io/kcm.email: "admin@wobscale.website"
 spec:
   tls:
   - hosts:
     - paypi.wobscale.website
-    secretName: paypi-wobscale-website-cert
+    secretName: paypi-wobscale-website-cert-2
   rules:
   - host: paypi.wobscale.website
     http:
