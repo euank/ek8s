@@ -27,8 +27,14 @@ spec:
         volumeMounts:
         - name: system
           mountPath: /mastodon/public/system
+        - name: packs
+          mountPath: /mastodon/public/packs
       volumes:
       - name: system
         nfs:
           server: 192.168.131.1
           path: /mnt/raid1/nfs/k8s/mastodon/system
+      - name: packs
+        nfs:
+          server: 192.168.131.1
+          path: /mnt/raid1/nfs/k8s/mastodon/packs
