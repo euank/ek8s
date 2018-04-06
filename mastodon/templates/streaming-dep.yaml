@@ -18,8 +18,8 @@ spec:
     spec:
       containers:
       - name: mastodon-streaming
-        image: wobscale/mastodon:v2.2.0-5-gd36fc7e8
-        command: ["npm", "run", "start"]
+        image: wobscale/mastodon:v2.3.3-4-ga2ec0656
+        command: ["yarn", "start"]
         ports:
         - containerPort: 4000
         env:

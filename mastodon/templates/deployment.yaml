@@ -18,12 +18,7 @@ spec:
     spec:
       containers:
       - name: mastodon
-        image: "wobscale/mastodon:v2.2.0-5-gd36fc7e8"
-        # Note: this has us running as root, unlike the regular upstream command
-        # To not run as root, execute /usr/local/bin/run instead of tini.
-        # However, since we're on overlay2 and the default entrypoint does a
-        # chown which takes about 5 minutes on the 4.12 kernel, skip it and run
-        # as root because that's really dumb.
+        image: "wobscale/mastodon:v2.3.3-4-ga2ec0656"
         command: ["sh", "-c", "cp /config/favicon.ico /mastodon/public/favicon.ico && exec /sbin/tini -- bundle exec puma -C config/puma.rb"]
         ports:
         - containerPort: 3000

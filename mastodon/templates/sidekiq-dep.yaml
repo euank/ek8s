@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: mastodon-sidekiq
-        image: wobscale/mastodon:v2.2.0-5-gd36fc7e8
+        image: wobscale/mastodon:v2.3.3-4-ga2ec0656
         args: ["bundle", "exec", "sidekiq", "-q", "default", "-q", "mailers", "-q", "pull", "-q", "push"]
         ports:
         - containerPort: 4000
