@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: c
-        image: euank/wobscale-payments-client
+        image: wobscale/payments-client:ab27706
         env:
         - name: ENV_ENVIRONMENT
           value: prod
