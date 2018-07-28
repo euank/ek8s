@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: mastodon
-        image: "wobscale/mastodon:v2.3.3-4-ga2ec0656"
+        image: "wobscale/mastodon:v2.4.3-6-g326042313"
         command: ["sh", "-c", "cp /config/favicon.ico /mastodon/public/favicon.ico && exec /sbin/tini -- bundle exec puma -C config/puma.rb"]
         ports:
         - containerPort: 3000
@@ -38,7 +38,7 @@ spec:
           initialDelaySeconds: 15
         resources:
           limits:
-            memory: 1.5Gi
+            memory: 2.1Gi
           requests:
             memory: 1.5Gi
         volumeMounts:
