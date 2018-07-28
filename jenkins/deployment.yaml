@@ -13,7 +13,8 @@ spec:
     spec:
       containers:
       - name: jenkins-master
-        image: "jenkins:2.46.2"
+        # jenkins/jenkins:lts @ 2018-05-31
+        image: "jenkins/jenkins@sha256:7f060c45fef3e0e598ba58a84b06c7b687cd25f59930137d9e03b40fb1ede2fc"
         env:
         - name: JAVA_OPTS
           value: "-Xmx700m"
