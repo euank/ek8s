@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: mastodon-ing
   annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "20M"
     ingress.kubernetes.io/proxy-body-size: "20M"
 spec:
   tls:
