@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: mastodon
-        image: "wobscale/mastodon:v2.4.3-6-g326042313"
+        image: "wobscale/mastodon:v2.5.0-6-g0d2430282"
         command: ["sh", "-c", "cp /config/favicon.ico /mastodon/public/favicon.ico && exec /sbin/tini -- bundle exec puma -C config/puma.rb"]
         ports:
         - containerPort: 3000
@@ -42,23 +42,11 @@ spec:
           requests:
             memory: 1.5Gi
         volumeMounts:
-        - name: assets
-          mountPath: /mastodon/public/assets
-        - name: packs
-          mountPath: /mastodon/public/packs
         - name: system
           mountPath: /mastodon/public/system
         - name: site-config 
           mountPath: /config/
       volumes:
-      - name: assets
-        nfs:
-          server: 192.168.131.1
-          path: /mnt/raid1/nfs/k8s/mastodon/assets
-      - name: packs
-        nfs:
-          server: 192.168.131.1
-          path: /mnt/raid1/nfs/k8s/mastodon/packs
       - name: system
         nfs:
           server: 192.168.131.1

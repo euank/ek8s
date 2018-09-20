@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: mastodon-sidekiq
-        image: wobscale/mastodon:v2.4.3-6-g326042313
+        image: wobscale/mastodon:v2.5.0-6-g0d2430282
         args: ["bundle", "exec", "sidekiq", "-q", "default", "-q", "mailers", "-q", "pull", "-q", "push"]
         ports:
         - containerPort: 4000
@@ -27,14 +27,8 @@ spec:
         volumeMounts:
         - name: system
           mountPath: /mastodon/public/system
-        - name: packs
-          mountPath: /mastodon/public/packs
       volumes:
       - name: system
         nfs:
           server: 192.168.131.1
           path: /mnt/raid1/nfs/k8s/mastodon/system
-      - name: packs
-        nfs:
-          server: 192.168.131.1
-          path: /mnt/raid1/nfs/k8s/mastodon/packs
