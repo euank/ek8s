@@ -1,0 +1,3 @@
+[submodule "prom-thanos/thanos"]
+	path = prom-thanos/thanos
+	url = https://github.com/improbable-eng/thanos
