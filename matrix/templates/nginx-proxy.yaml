@@ -39,7 +39,7 @@ spec:
           name: synapse-nginx-config
       - name: certs
         secret:
-          secretName: wobscale.chat
+          secretName: wobscale-chat-cert-2
       - name: dh
         secret:
           secretName: ingress-dhparam

@@ -12,7 +12,7 @@ spec:
   tls:
   - hosts:
     - wobscale.chat
-    secretName: wobscale.chat
+    secretName: wobscale-chat-cert-2
   rules:
   - host: wobscale.chat
     http:

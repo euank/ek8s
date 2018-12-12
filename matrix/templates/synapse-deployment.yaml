@@ -57,7 +57,7 @@ spec:
           name: synapse-logconfig
       - name: certs
         secret:
-          secretName: wobscale.chat
+          secretName: wobscale-chat-cert-2
       - name: dh
         secret:
           secretName: ingress-dhparam

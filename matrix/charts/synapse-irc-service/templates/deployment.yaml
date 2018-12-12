@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: matrix-irc
-        image: "euank/matrix-irc:8c7e3f4"
+        image: "euank/matrix-irc:c9deb06"
         volumeMounts:
         - name: conf
           mountPath: /conf/
