@@ -35,6 +35,8 @@ data:
         irc.wobscale.website:
           port: 6697
           ssl: true
+          ircClients:
+            allowNickChanges: true
           botConfig:
             nick: "matrix[irc]"
           dynamicChannels:
