@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: mastodon
-        image: "wobscale/mastodon:v2.6.1-6-g311bcb0d0"
+        image: "wobscale/mastodon:v2.7.1-6-gff91da9e2"
         command: ["sh", "-c", "cp /config/favicon.ico /mastodon/public/favicon.ico && exec /sbin/tini -- bundle exec puma -C config/puma.rb"]
         ports:
         - containerPort: 3000
