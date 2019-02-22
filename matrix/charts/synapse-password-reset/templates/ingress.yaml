@@ -3,10 +3,7 @@ kind: Ingress
 metadata:
   name: wobscale-matrix-pw-reset
   annotations:
-    stable.k8s.psg.io/kcm.enabled: "true"
-    stable.k8s.psg.io/kcm.provider: "cloudflare"
-    stable.k8s.psg.io/kcm.email: "admin@wobscale.website"
-    ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   tls:
   - hosts:
