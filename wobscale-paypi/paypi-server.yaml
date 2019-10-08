@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: s
-        image: wobscale/payments-server:ab27706
+        image: wobscale/payments-server:6658e07
         env:
         - name: CORS_ALLOW_ORIGIN
           value: "https://pay.wobscale.website"
