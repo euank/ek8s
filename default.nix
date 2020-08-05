@@ -16,7 +16,7 @@ let
     ];
     nginx-ingress-controller = {
       enable = true;
-      hostNetwork = true;
+      serviceType = "LoadBalancer";
     };
   };
 
