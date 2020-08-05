@@ -17,6 +17,7 @@ in
       let
         # Convert the yaml file into N json files
         jsonFiles = pkgs.runCommand "convert-k8s-yaml" {} ''
+          set -euo pipefail
           mkdir $out && cd $out
           ${yaml2json}/bin/k8syaml2json < ${yaml} | ${pkgs.gawk}/bin/awk '{print > NR}'
         '';
@@ -34,7 +35,7 @@ in
             apiVersionParts = lib.splitString "/" apiVersion;
             groupVersion =
               if lib.length apiVersionParts == 0 then throw "apiVersion must be of the form 'ResourceVersion' or 'group/ResourceVersoin', was empty"
-              else if lib.length apiVersionParts == 1 then { group = "core"; version = lib.head apiVersionParts; }
+              else if lib.length apiVersionParts == 1 then { group = "core"; version = apiVersion; }
               else if lib.length apiVersionParts == 2 then { group = lib.head apiVersionParts; version = lib.elemAt apiVersionParts 1; }
               else throw "apiVersion must have only one slash in it, was ${apiVersion}";
             kind = expr.kind;
@@ -50,5 +51,5 @@ in
             "${groupVersion.group}"."${groupVersion.version}"."${kind}"."${name}" = filterMetadata expr;
           };
         in
-          mergeAttrs (builtins.map convertExpr nixExprs);
+          lib.foldl (attr: expr: lib.recursiveUpdate attr (convertExpr expr)) {} nixExprs;
   }
