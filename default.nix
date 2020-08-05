@@ -9,13 +9,22 @@
 
 let
   kpkgs = import ./kpkgs { inherit pkgs; };
-  config = (kubenix.evalModules {
+  configuration = {config, ...}: {
+    imports = [
+      kubenix.modules.k8s
+      ./modules/nginx-ingress-controller
+    ];
+    nginx-ingress-controller = {
+      enable = true;
+      hostNetwork = true;
+    };
+  };
+
+  eval = (kubenix.evalModules {
     specialArgs = {
       inherit kubenix pkgs kpkgs;
     };
-    modules = [
-      ./modules/nginx-ingress-controller
-    ];
-  }).config;
+    modules = [ configuration ];
+  });
 in
-  config.kubernetes.result
+  eval.config.kubernetes.result
