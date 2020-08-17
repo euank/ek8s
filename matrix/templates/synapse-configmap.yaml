@@ -27,21 +27,21 @@ data:
     listeners:
       - port: 8000
         tls: false
-        bind_address: ''
+        bind_address: '0.0.0.0'
         type: http
         x_forwarded: true
         resources:
-          - names: [client, webclient]
+          - names: [client]
             compress: false
           - names: [federation]
             compress: false
       - port: 8448
         tls: false
-        bind_address: ''
+        bind_address: '0.0.0.0'
         type: http
         x_forwarded: true
         resources:
-          - names: [client, webclient]
+          - names: [client]
             compress: false
           - names: [federation]
             compress: false

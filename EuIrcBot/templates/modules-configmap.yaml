@@ -8,18 +8,14 @@ metadata:
     release: "{{ .Release.Name }}"
   name: "euircbot-modules"
 data:
-  blerg.json: |-
-    {
-      "username": {{ .Values.euircbot.moduleConfig.blerg.username | quote }},
-      "password": {{ .Values.euircbot.moduleConfig.blerg.password | quote }}
-    }
   dumbcommand.json: |-
     {
       "allow_commands": {{ .Values.euircbot.moduleConfig.dumbcommand.allowCommands }}
     }
   google.json: |-
     {
-      "apiKey": {{ .Values.euircbot.moduleConfig.google.apiKey | quote }}
+      "apiKey": {{ .Values.euircbot.moduleConfig.google.apiKey | quote }},
+      "cseID":  {{ .Values.euircbot.moduleConfig.google.cseID | quote }}
     }
   googleimgs.json: |-
     {
