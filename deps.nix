@@ -15,8 +15,6 @@ in
 
     installPhase = ''
       mkdir -p $out
-
       ln -vsf ${cert-manager} $out/cert-manager
-
     '';
   }
