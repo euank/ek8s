@@ -1,9 +1,8 @@
 import * as k8s from "@pulumi/kubernetes";
 import * as kx from "@pulumi/kubernetesx";
 
-const kubeCertManager = new k8s.helm.v3.Chart("cert-manager", {
-    path: "./deps/cert-manager/deploy/charts/cert-manager",
-    values: {},
+new k8s.yaml.ConfigFile("cert-manager", {
+    file: "./deps/cert-manager/cert-manager.yaml",
 });
 
 const appLabels = { app: "nginx" };

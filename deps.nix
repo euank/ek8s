@@ -3,9 +3,9 @@ let
     url = "https://github.com/NixOS/nixpkgs/archive/4cb48cc25622334f17ec6b9bf56e83de0d521fb7.tar.gz";
     sha256 = "0z005p4jwlnfh9gbgjc3anzrabzdys2d94l4chvdhzxr1pyj4imy";
   }) {};
-  cert-manager = fetchTarball {
-    url = "https://github.com/jetstack/cert-manager/archive/refs/tags/v1.3.0.tar.gz";
-    sha256 = "1rs32wh0g1hmhc804hdaf9wnrqgxkr24b4z84cwbl1zfmlgh1k0h";
+  cert-manager-yaml = pkgs.fetchurl {
+    url = "https://github.com/jetstack/cert-manager/releases/download/v1.3.0/cert-manager.yaml";
+    sha256 = "sha256-yqWcmXa2rIvjz+JVy51fvgWWTZuM27nm1s80MZloHTM=";
   };
 in
   pkgs.stdenv.mkDerivation {
@@ -14,7 +14,7 @@ in
     phases = [ "installPhase" ];
 
     installPhase = ''
-      mkdir -p $out
-      ln -vsf ${cert-manager} $out/cert-manager
+      mkdir -p $out/cert-manager
+      ln -vsf ${cert-manager-yaml} $out/cert-manager/cert-manager.yaml
     '';
   }
