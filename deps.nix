@@ -7,6 +7,8 @@ let
     url = "https://github.com/jetstack/cert-manager/releases/download/v1.3.0/cert-manager.yaml";
     sha256 = "sha256-yqWcmXa2rIvjz+JVy51fvgWWTZuM27nm1s80MZloHTM=";
   };
+
+  euircbot-yaml = import ./kubenix.nix { inherit pkgs; };
 in
   pkgs.stdenv.mkDerivation {
     pname = "puk8s-deps";
@@ -14,7 +16,8 @@ in
     phases = [ "installPhase" ];
 
     installPhase = ''
-      mkdir -p $out/cert-manager
+      mkdir -p $out/cert-manager $out/euircbot
       ln -vsf ${cert-manager-yaml} $out/cert-manager/cert-manager.yaml
+      ln -vsf ${euircbot-yaml} $out/euircbot/euircbot.yaml
     '';
   }

@@ -3,3 +3,4 @@
 /deps
 /passphrase
 /.envrc
+/secrets.nix
