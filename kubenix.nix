@@ -14,8 +14,23 @@ let
     imports = [
       kubenix.modules.k8s
       ./kubenix/modules/euircbot
+      ./kubenix/modules/euankcom
     ];
 
+    # Used by ecr-updater
+    # nix has a better secrets mechanism for me than pulumi, so manage em here
+    # for now. I'll move em one day.
+    kubernetes.resources.secrets.ecr-aws-credentials = {
+      data = {
+        AWS_ACCESS_KEY_ID = secrets.aws.access_key;
+        AWS_SECRET_ACCESS_KEY = secrets.aws.secret_key;
+      };
+    };
+
+    euankcom = {
+      enable = true;
+      image = "171940471906.dkr.ecr.us-west-2.amazonaws.com/euank-com:6ifm0l84p7nnqmrpkaa61jmamn03kisp";
+    };
     euircbot = {
       enable = true;
       config = {

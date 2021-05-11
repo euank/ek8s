@@ -7,7 +7,6 @@ let
     url = "https://github.com/jetstack/cert-manager/releases/download/v1.3.0/cert-manager.yaml";
     sha256 = "sha256-yqWcmXa2rIvjz+JVy51fvgWWTZuM27nm1s80MZloHTM=";
   };
-
   euircbot-yaml = import ./kubenix.nix { inherit pkgs; };
 in
   pkgs.stdenv.mkDerivation {
