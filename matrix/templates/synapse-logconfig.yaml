@@ -23,6 +23,7 @@ data:
         maxBytes: 104857600
         backupCount: 10
         filters: [context]
+        encoding: utf8
         level: WARN
       console:
         class: logging.StreamHandler
@@ -38,4 +39,3 @@ data:
     root:
       level: WARN
       handlers: [file, console]
-

@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: synapse
-        image: euank/synapse:1.18.0-1
+        image: euank/synapse:1.34.0-1
         resources:
           requests:
             memory: 1500Mi
