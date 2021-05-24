@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: synapse
-        image: euank/synapse:0.99.4-4
+        image: euank/synapse:1.18.0-1
         resources:
           requests:
             memory: 1500Mi
@@ -33,12 +33,8 @@ spec:
           mountPath: /secret/
         - name: conf
           mountPath: /conf/
-        - name: logconf
-          mountPath: /base-conf/
         - name: certs
           mountPath: /certs/
-        - name: dh
-          mountPath: /dh/
         - name: irc-svc
           mountPath: /matrix-irc/
       volumes:
@@ -52,15 +48,9 @@ spec:
       - name: conf
         configMap:
           name: synapse-config
-      - name: logconf
-        configMap:
-          name: synapse-logconfig
       - name: certs
         secret:
           secretName: wobscale-chat-cert-2
-      - name: dh
-        secret:
-          secretName: ingress-dhparam
       - name: irc-svc
         configMap:
           name: matrix-irc-config

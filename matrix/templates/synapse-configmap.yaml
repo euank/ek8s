@@ -5,13 +5,8 @@ metadata:
 data:
   homeserver.yaml: |-
     # vim:ft=yaml
-    no_tls: True
-    
-    ## Server ##
-    tls_certificate_path: /certs/tls.crt
-    tls_private_key_path: /certs/tls.key
-    tls_dh_params_path: /dh/dhparam.pem
-    
+    no_tls: true
+
     # The domain name of the server, with optional explicit port.
     # This is used by remote servers to connect to this server,
     # e.g. matrix.org, localhost:8080, etc.
@@ -19,10 +14,10 @@ data:
     server_name: "wobscale.chat"
 
     public_baseurl: "https://wobscale.chat:443/"
-    
+
     # When running as a daemon, the file to store the pid in
     pid_file: /var/run/homeserver.pid
-    web_client: False
+    web_client: false
     soft_file_limit: 0
     listeners:
       - port: 8000
@@ -31,9 +26,7 @@ data:
         type: http
         x_forwarded: true
         resources:
-          - names: [client]
-            compress: false
-          - names: [federation]
+          - names: [client, federation]
             compress: false
       - port: 8448
         tls: false
@@ -41,11 +34,9 @@ data:
         type: http
         x_forwarded: true
         resources:
-          - names: [client]
+          - names: [client, federation]
             compress: false
-          - names: [federation]
-            compress: false
-    
+
     database:
       name: "psycopg2"
       args:
@@ -55,60 +46,57 @@ data:
         database: synapse
         cp_min: 5
         cp_max: 10
-    
+
     event_cache_size: "10K"
     verbose: 0
-    
-    # File to write logging to
-    log_file: "/var/log/synapse/homeserver.log"
-    
+
     # A yaml python logging config file
-    log_config: "/base-conf/log.config"
-    
+    log_config: "/conf/log.config"
+
     ## Ratelimiting ##
     # Number of messages a client can send per second
     rc_messages_per_second: 0.2
     # Number of message a client can send before being throttled
     rc_message_burst_count: 20.0
-    
+
     # The federation window size in milliseconds
     federation_rc_window_size: 1000
-    
+
     # The number of federation requests from a single server in a window
     # before the server will delay processing the request.
     federation_rc_sleep_limit: 20
-    
+
     # The duration in milliseconds to delay processing events from
     # remote servers by if they go over the sleep limit.
     federation_rc_sleep_delay: 500
-    
+
     # The maximum number of concurrent federation requests allowed
     # from a single server
     federation_rc_reject_limit: 50
-    
+
     # The number of federation requests to concurrently process from a
     # single server
     federation_rc_concurrent: 3
-    
+
     # Directory where uploaded images and attachments are stored.
     media_store_path: "/data/media"
-    
+
     # Directory where in-progress uploads are stored.
     uploads_path: "/data/uploads"
-    
+
     # The largest allowed upload size in bytes
     max_upload_size: "50M"
-    
+
     # Maximum number of pixels that will be thumbnailed
     max_image_pixels: "32M"
-    
+
     # Whether to generate new thumbnails on the fly to precisely match
     # the resolution requested by the client. If true then whenever
     # a new resolution is requested by the client the server will
     # generate a new thumbnail. If false the server will pick a thumbnail
     # from a precalculated list.
     dynamic_thumbnails: false
-    
+
     # List of thumbnail to precalculate when an image is uploaded.
     thumbnail_sizes:
     - width: 32
@@ -126,12 +114,12 @@ data:
     - width: 800
       height: 600
       method: scale
-    
+
     # Is the preview URL API enabled?  If enabled, you *must* specify
     # an explicit url_preview_ip_range_blacklist of IPs that the spider is
     # denied from accessing.
-    url_preview_enabled: False
-    
+    url_preview_enabled: false
+
     # List of IP address CIDR ranges that the URL preview spider is denied
     # from accessing.  There are no defaults: you must explicitly
     # specify a list for URL previewing to work.  You should specify any
@@ -154,7 +142,7 @@ data:
     #
     # url_preview_ip_range_whitelist:
     # - '192.168.1.1'
-    
+
     # Optional list of URL matches that the URL preview spider is
     # denied from accessing.  You should use url_preview_ip_range_blacklist
     # in preference to this, otherwise someone could define a public DNS
@@ -188,110 +176,109 @@ data:
     #
     # # blacklist any URL with a literal IPv4 address
     # - netloc: '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$'
-    
+
     # The largest allowed URL preview spidering size in bytes
     max_spider_size: "10M"
-    
-    
-    
-    
+
+
+
+
     ## Captcha ##
     # See docs/CAPTCHA_SETUP for full details of configuring this.
-    
+
     # This Home Server's ReCAPTCHA public key.
     recaptcha_public_key: "{{ .Values.matrix.synapse.recaptchaPublicKey }}"
-    
+
     # This Home Server's ReCAPTCHA private key.
     recaptcha_private_key: "{{ .Values.matrix.synapse.recaptchaPrivateKey }}"
-    
+
     # Enables ReCaptcha checks when registering, preventing signup
     # unless a captcha is answered. Requires a valid ReCaptcha
     # public/private key.
     enable_registration_captcha: True
-    
+
     # A secret key used to bypass the captcha test entirely.
     # captcha_bypass_secret: "YOUR_SECRET_HERE"
-    
+
     # The API endpoint to use for verifying m.login.recaptcha responses.
     recaptcha_siteverify_api: "https://www.google.com/recaptcha/api/siteverify"
-    
-    
+
+
     ## Turn ##
-    
+
     # The public URIs of the TURN server to give to clients
     turn_uris: []
-    
+
     # The shared secret used to compute passwords for the TURN server
     # TODO(euank)
     turn_shared_secret: "YOUR_SHARED_SECRET"
-    
+
     # How long generated TURN credentials last
     turn_user_lifetime: "1h"
-    
-    
+
+
     ## Registration ##
-    
+
     # Enable registration for new users.
-    enable_registration: False
-    
+    enable_registration: false
+
     # If set, allows registration by anyone who also has the shared
     # secret, even if registration is otherwise disabled.
     registration_shared_secret: "{{ .Values.matrix.synapse.sharedSecret }}"
-    
+
     # Sets the expiry for the short term user creation in
     # milliseconds. For instance the bellow duration is two weeks
     # in milliseconds.
     user_creation_max_duration: 1209600000
-    
+
     # Set the number of bcrypt rounds used to generate password hash.
     # Larger numbers increase the work factor needed to generate the hash.
     # The default number of rounds is 12.
     bcrypt_rounds: 12
-    
+
     # Allows users to register as guests without a password/email/etc, and
     # participate in rooms hosted on this server which have been made
     # accessible to anonymous users.
-    allow_guest_access: False
-    
+    allow_guest_access: false
+
     # The list of identity servers trusted to verify third party
     # identifiers by this server.
     trusted_third_party_id_servers:
     - matrix.org
-    - vector.im
-    
-    
+
+
     ## Metrics ###
-    
+
     # Enable collection and rendering of performance metrics
-    enable_metrics: False
-    report_stats: False
+    enable_metrics: false
+    report_stats: false
     metrics_port: 9092
-    
-    
+
+
     ## API Configuration ##
-    
+
     # A list of event types that will be included in the room_invite_state
     room_invite_state_types:
         - "m.room.join_rules"
         - "m.room.canonical_alias"
         - "m.room.avatar"
         - "m.room.name"
-    
-    
+
+
     # A list of application service config file to use
     app_service_config_files:
     - "/matrix-irc/registration.yaml"
-    
+
     macaroon_secret_key: "{{ .Values.matrix.synapse.macaroonSecretKey }}"
-    
+
     # Used to enable access token expiration.
-    expire_access_token: False
-    
+    expire_access_token: false
+
     ## Signing Keys ##
-    
+
     # Path to the signing key to sign messages with
     signing_key_path: "/secret/signing.key"
-    
+
     # The keys that the server used to sign messages with but won't use
     # to sign new messages. E.g. it has lost its private key
     # TODO(euank)
@@ -301,13 +288,13 @@ data:
     #    key: "The public part of your old signing key."
     #    # Millisecond POSIX timestamp when the key expired.
     #    expired_ts: 123456789123
-    
+
     # How long key response published by this server is valid for.
     # Used to set the valid_until_ts in /key/v2 APIs.
     # Determines how quickly servers will query to check which keys
     # are still valid.
     key_refresh_interval: "300s" # 1 fuck you
-    
+
     # The trusted servers to download signing keys from.
     perspectives:
       servers:
@@ -315,9 +302,32 @@ data:
           verify_keys:
             "ed25519:auto":
               key: "Noi6WqcDj0QmPxCNQqgezwTlBKrfqehY1u2FyWP9uYw"
-    
+
     # Enable password for login.
     password_config:
       enabled: true
       pepper: "{{ .Values.matrix.synapse.pepper }}"
+  log.config: |-
+    version: 1
+    formatters:
+        precise:
+            format: '%(asctime)s - %(name)s - %(lineno)d - %(levelname)s - %(request)s - %(message)s'
+    filters:
+        context:
+            (): synapse.logging.context.LoggingContextFilter
+            request: ""
+    handlers:
+        console:
+            class: logging.StreamHandler
+            formatter: precise
+            filters: [context]
+    loggers:
+        synapse.storage.SQL:
+            # beware: increasing this to DEBUG will make synapse log sensitive
+            # information such as access tokens.
+            level: WARN
+    root:
+        level: WARN
+        handlers: [console]
 
+    disable_existing_loggers: false

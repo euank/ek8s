@@ -3,9 +3,6 @@ kind: Ingress
 metadata:
   name: wobscale-matrix
   annotations:
-    stable.k8s.psg.io/kcm.enabled: "true"
-    stable.k8s.psg.io/kcm.provider: "cloudflare"
-    stable.k8s.psg.io/kcm.email: "admin@wobscale.website"
     ingress.kubernetes.io/proxy-body-size: "50M"
     nginx.ingress.kubernetes.io/proxy-body-size: "50M"
 spec:
@@ -24,4 +21,8 @@ spec:
       - path: "/{{ .Values.matrix.registration.secretPath }}"
         backend:
           serviceName: synapse-backregister
+          servicePort: 80
+      - path: "/.well-known/matrix"
+        backend:
+          serviceName: matrix-well-known
           servicePort: 80
