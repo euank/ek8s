@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: syncplay-server
-        image: euank/syncplay-server:v1.4.0
+        image: euank/syncplay-server:1.6.9-1
         env:
         - name: SALT
           valueFrom:
