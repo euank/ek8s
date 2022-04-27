@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kanidm-staging
+data:
+  server.toml: |
+    #   The webserver bind address. Will use HTTPS if tls_* is provided.
+    #   Defaults to "127.0.0.1:8443"
+    bindaddress = "[::]:8000"
+    db_path = "/data/kanidm.db"
+    #   The number of entries to store in the in-memory cache. Minimum value is 256. If unset
+    #   an automatic heuristic is used to scale this.
+    # db_arc_size = 2048
+    #
+    #   The log level of the server. May be default, verbose, perfbasic, perffull
+    #   Defaults to "default"
+    log_level = "verbose"
+    #
+    #   The DNS domain name of the server. This is used in a number of security-critical contexts
+    #   such as webauthn, so it *must* match your DNS hostname. It is what is used to create
+    #   security principal names such as `william@idm.example.com` so that in a (future)
+    #   trust configuration it is possible to have unique spn's throughout the topology.
+    #   ⚠️  WARNING ⚠️
+    #   Changing this value WILL break many types of registered credentials for accounts
+    #   including but not limited to webauthn, oauth tokens, and more.
+    #   If you change this value you *must* run `kanidmd domain_name_change` immediately
+    #   after.
+    domain = "kanidm.staging.wobscale.website"
+    #
+    #   The origin for webauthn. This is the url to the server, with the port included if
+    #   it is non-standard (any port except 443). This must match or be a descendent of the
+    #   domain name you configure above. If these two items are not consistent, the server
+    #   WILL refuse to start!
+    # origin = "https://idm.example.com"
+    origin = "https://kanidm.staging.wobscale.website"
+    #
+    #   The role of this server. This affects features available and how replication may interact.
+    #   Valid roles are:
+    #   - WriteReplica
+    #     This server provides all functionality of Kanidm. It allows authentication, writes, and
+    #     the web user interface to be served.
+    #   - WriteReplicaNoUI
+    #     This server is the same as a WriteReplica, but does NOT offer the web user interface.
+    #   - ReadOnlyReplica
+    #     This server will not writes initiated by clients. It supports authentication and reads,
+    #     and must have a replication agreement as a source of it's data.
+    #   Defaults to "WriteReplica".
+    # role = "WriteReplica"
+    #
+    # [online_backup]
+    #   The path to the output folder for online backups
+    # path = "/var/lib/kanidm/backups/"
+    #   The schedule to run online backups - see https://crontab.guru/
+    #   every day at 22:00 UTC (default)
+    # schedule = "00 22 * * *"
+    #    four times a day at 3 minutes past the hour, every 6th hours
+    # schedule = "03 */6 * * *"
+    #   Number of backups to keep (default 7)
+    # versions = 7

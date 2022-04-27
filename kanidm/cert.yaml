@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kanidm-staging
+  labels:
+    r53WobChallenge: 'true'
+spec:
+  secretName: kanidm-staging-cert
+  dnsNames:
+  - kanidm.staging.wobscale.website
+  issuerRef:
+    name: letsencrypt
+    kind: Issuer

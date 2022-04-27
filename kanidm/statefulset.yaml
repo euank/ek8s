@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kanidm-staging
+  labels:
+    name: "kanidm-staging"
+spec:
+  replicas: 1
+  serviceName: kanidm-staging
+  selector:
+    matchLabels:
+      app: kanidm-staging
+  template:
+    metadata:
+      labels:
+        name: kanidm-staging
+        app: kanidm-staging
+    spec:
+      containers:
+      - name: kanidm
+        # x86_64_devel on 2022-03-28
+        image: docker.io/kanidm/server@sha256:00804e4614217d71985d436a396379becce1994b8ab1507e2c6fd60db67102ac
+        args: [ "kanidmd", "server", "-c", "/config/server.toml" ]
+        resources:
+          limits:
+            memory: 600Mi
+          requests:
+            memory: 300Mi
+        ports:
+          - name: http
+            containerPort: 8000
+        volumeMounts:
+        - name: config
+          mountPath: /config
+        - name: data
+          mountPath: /data
+      volumes:
+      - name: config
+        configMap:
+          name: kanidm-staging
+      - name: data
+        nfs:
+          server: 192.168.131.1
+          path: "/mnt/raid1/nfs/k8s/kanidm/data"
