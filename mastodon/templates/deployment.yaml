@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mastodon
@@ -6,6 +6,9 @@ metadata:
     app: mastodon
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: mastodon
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -18,8 +21,8 @@ spec:
     spec:
       containers:
       - name: mastodon
-        image: "wobscale/mastodon:v2.7.1-6-gff91da9e2"
-        command: ["sh", "-c", "cp /config/favicon.ico /mastodon/public/favicon.ico && exec /sbin/tini -- bundle exec puma -C config/puma.rb"]
+        image: "wobscale/mastodon:v3.5.1-6-g22efeee80"
+        command: ["sh", "-c", "cp /config/favicon.ico /mastodon/public/favicon.ico && exec bundle exec puma -C config/puma.rb"]
         ports:
         - containerPort: 3000
         env:
@@ -38,13 +41,13 @@ spec:
           initialDelaySeconds: 15
         resources:
           limits:
-            memory: 2.1Gi
+            memory: 2500Mi
           requests:
-            memory: 1.5Gi
+            memory: 1600Mi
         volumeMounts:
         - name: system
           mountPath: /mastodon/public/system
-        - name: site-config 
+        - name: site-config
           mountPath: /config/
       volumes:
       - name: system

@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mastodon-sidekiq
@@ -6,6 +6,9 @@ metadata:
     app: mastodon-sidekiq
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: mastodon-sidekiq
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -18,7 +21,7 @@ spec:
     spec:
       containers:
       - name: mastodon-sidekiq
-        image: wobscale/mastodon:v2.7.1-6-gff91da9e2
+        image: wobscale/mastodon:v3.5.1-6-g22efeee80
         args: ["bundle", "exec", "sidekiq", "-q", "default", "-q", "mailers", "-q", "pull", "-q", "push"]
         ports:
         - containerPort: 4000

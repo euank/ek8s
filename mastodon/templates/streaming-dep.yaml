@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mastodon-streaming
@@ -6,6 +6,9 @@ metadata:
     app: mastodon-streaming
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: mastodon-streaming
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -18,7 +21,7 @@ spec:
     spec:
       containers:
       - name: mastodon-streaming
-        image: wobscale/mastodon:v2.7.1-6-gff91da9e2
+        image: wobscale/mastodon:v3.5.1-6-g22efeee80
         command: ["yarn", "start"]
         ports:
         - containerPort: 4000

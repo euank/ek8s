@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mastodon-redis
@@ -6,6 +6,9 @@ metadata:
     app: mastodon-redis
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: mastodon-redis
   template:
     metadata:
       labels:
@@ -13,7 +16,7 @@ spec:
     spec:
       containers:
       - name: mastodon-redis
-        image: redis:3.2
+        image: redis:6
         command: ["redis-server", "--appendonly", "yes"]
         ports:
         - containerPort: 6379
