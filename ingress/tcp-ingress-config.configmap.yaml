@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  namespace: ingress-nginx
   name: nginx-tcp-ingress-configmap
 data:
   8999: "default/syncplay-server:8999"
